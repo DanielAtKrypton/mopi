@@ -368,8 +368,11 @@ function install_fex(package, packages_folder, download_folder)
     fexDownloadScriptPath = fullfile(fileparts(which('mopi.m')), 'fexDownload.sh');
     if ispc
         fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
+        dl_destination_to_use = convertPcToUnixPath(dl_destination);
+    else
+        dl_destination_to_use = dl_destination;
     end
-    [InvertedStatus, ~] = unix(['bash ' fexDownloadScriptPath ' ' convertPcToUnixPath(dl_destination) ' ' URL]);
+    [InvertedStatus, ~] = system(['bash ' fexDownloadScriptPath ' ' dl_destination_to_use ' ' URL]);
     status = ~InvertedStatus;
     % Throw a warning and exit if we couldn't install it
     if status==0
