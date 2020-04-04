@@ -365,11 +365,12 @@ function install_fex(package, packages_folder, download_folder)
     dl_destination = fullfile(download_folder, [package '.tmp']);
     if ~exist(download_folder, 'dir'); mkdir(download_folder); end
     %     [dl_destination, status] = urlwrite(URL, dl_destination);
-    fexDownloadScriptPath = fullfile(fileparts(which('mopi.m')), 'fexDownload.sh');
     if ispc
+        fexDownloadScriptPath = fullfile(fileparts(which('mopi.m')), 'fexDownload.sh');
         fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
         dl_destination_to_use = convertPcToUnixPath(dl_destination);
     else
+        fexDownloadScriptPath = fullfile(fileparts(fileparts(which('mopi.m'))), 'fexDownload.sh');
         dl_destination_to_use = dl_destination;
     end
     [InvertedStatus, ~] = system(['bash ' fexDownloadScriptPath ' ' dl_destination_to_use ' ' URL]);

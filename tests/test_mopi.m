@@ -158,7 +158,7 @@ function check_url(method, extension, addInlineComment)
     % Declare constants
     switch lower(extension)
         case 'zip'
-            URL = 'https://www.mathworks.com/matlabcentral/fileexchange/74866-channel-equalization-using-steepest-descent-method';
+            URL = 'http://www.mathworks.com/moler/ncm.zip';
         case 'tar.gz'
             URL = 'http://www.mathworks.com/moler/ncm.tar.gz';
         otherwise
