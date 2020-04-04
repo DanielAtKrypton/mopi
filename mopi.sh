@@ -14,7 +14,7 @@
 #   1 - failure
 #   2 - unrecognised line in file
 #
-# Copyright (C) 2016  Scott C. Lowe <scott.code.lowe@gmail.com>
+# Copyright (C) 2020  Scott C. Lowe <scott.code.lowe@gmail.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 # License
 #==============================================================================
 
-echo "mopi.sh  Copyright (C) 2016  Scott C. Lowe"
+echo "mopi.sh  Copyright (C) 2020  Scott C. Lowe, Daniel K. de Souza"
 echo "This program comes with ABSOLUTELY NO WARRANTY; not even for"
 echo "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
 echo "This is free software, and you are welcome to redistribute it under"
@@ -278,7 +278,7 @@ function install_uri {
     then
         echo "Downloading to file '$FILENAME' to $DL_DESTINATION";
         # wget -O "$DL_DESTINATION" "$URL";
-        . fexDownload $DL_DESTINATION $URL;
+        . fexDownload.sh $DL_DESTINATION $URL;
         RESULT=$?; if [[ $RESULT -ne 0 ]]; then return $RESULT; fi;
     else
         echo "Using cached copy of file from $DL_DESTINATION";
