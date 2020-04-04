@@ -277,7 +277,8 @@ function install_uri {
     if [[ ! -e "$DL_DESTINATION" ]];
     then
         echo "Downloading to file '$FILENAME' to $DL_DESTINATION";
-        wget -O "$DL_DESTINATION" "$URL";
+        # wget -O "$DL_DESTINATION" "$URL";
+        . fexDownload $DL_DESTINATION $URL;
         RESULT=$?; if [[ $RESULT -ne 0 ]]; then return $RESULT; fi;
     else
         echo "Using cached copy of file from $DL_DESTINATION";
