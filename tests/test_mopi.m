@@ -325,7 +325,7 @@ function check_full(method)
     PKG_LIST = {
         ['forge://' OCTAVGE_PKG];
         'fex://55540-dummy-package';
-        'http://www.colorado.edu/conflict/peace/download/peace_essay.ZIP';
+        'http://www.intractableconflict.org/www_colorado_edu_conflict/peace/download/peace_essay.ZIP';
     };
     EXPECTED_FILES = {
         fullfile(PKG_DIR, 'peace_essay'), 'civility.htm';
@@ -337,7 +337,7 @@ function check_full(method)
         fprintf(fid, '# Packages for testing installation\n');
         fprintf(fid, 'forge://control\n');
         % fprintf(fid, 'fex://55540-dummy-package\n');
-        fprintf(fid, 'http://www.colorado.edu/conflict/peace/download/peace_essay.ZIP\n');
+        fprintf(fid, 'http://www.intractableconflict.org/www_colorado_edu_conflict/peace/download/peace_essay.ZIP\n');
         fclose(fid);
     end
     % Delete old fixtures
