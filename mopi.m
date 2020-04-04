@@ -353,15 +353,18 @@ function install_fex(package, packages_folder, download_folder)
     fprintf('Installing package %s from FileExchange\n', package);
     % Set the URL to download from
     BASEURL = 'https://www.mathworks.com/matlabcentral/fileexchange/';
-    QUERY = '?download=true';
-    URL = [BASEURL package QUERY];
+%     QUERY = '?download=true';
+%     URL = [BASEURL package QUERY];
+    URL = [BASEURL package];
     % % Let install_url do all the work for us
     % install_url(URL);
 
     % Download package from Matlab Central File Exchange
     dl_destination = fullfile(download_folder, [package '.tmp']);
     if ~exist(download_folder, 'dir'); mkdir(download_folder); end
-    [dl_destination, status] = urlwrite(URL, dl_destination);
+    %     [dl_destination, status] = urlwrite(URL, dl_destination);
+    [InvertedStatus, ~] = unix(['bash fexDownload.sh ' dl_destination ' ' URL']);
+    status = ~InvertedStatus;
     % Throw a warning and exit if we couldn't install it
     if status==0
         error('MOPI:NoDownload', ...
