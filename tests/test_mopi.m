@@ -1,9 +1,11 @@
 % Tests for mopi.m and mopi.sh, implemented
 % with the MOxUnit framework.
-function test_suite = test_mopi()
-    % Top level function should call initTestSuite and return the
-    % variable test_suite (which initTestSuite will put into the
-    % workspace for us).
+function test_suite=test_mopi %#ok<STOUT>
+% tests for function 'foo'
+    try % assignment of 'localfunctions' is necessary in Matlab >= 2016
+        test_functions=localfunctions(); %#ok<NASGU>
+    catch % no problem; early Matlab versions can use initTestSuite fine
+    end
     initTestSuite;
 end
 
@@ -111,8 +113,14 @@ function check_forge(method, includeProtocol)
     switch method
         case 'shell'
             % Run the shell script
-            status = system( ...
-                sprintf('./mopi.sh %s %s -', FNAME, PKG_DIR));
+            if ispc
+                FNAME_TO_USE = convertPcToUnixPath(FNAME);
+                PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
+            else
+                FNAME_TO_USE = FNAME;
+                PKG_DIR_TO_USE = PKG_DIR;
+            end
+            status = system(sprintf('bash ../mopi.sh %s %s -', FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status);
         case 'matlab'
             % Run the matlab script
@@ -148,7 +156,7 @@ function check_url(method, extension, addInlineComment)
     % Declare constants
     switch lower(extension)
         case 'zip'
-            URL = 'http://www.mathworks.com/moler/ncm.zip';
+            URL = 'https://www.mathworks.com/matlabcentral/fileexchange/74866-channel-equalization-using-steepest-descent-method';
         case 'tar.gz'
             URL = 'http://www.mathworks.com/moler/ncm.tar.gz';
         otherwise
@@ -177,8 +185,14 @@ function check_url(method, extension, addInlineComment)
     switch method
         case 'shell'
             % Run the shell script
-            status = system( ...
-                sprintf('./mopi.sh %s %s -', FNAME, PKG_DIR));
+            if ispc
+                FNAME_TO_USE = convertPcToUnixPath(FNAME);
+                PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
+            else
+                FNAME_TO_USE = FNAME;
+                PKG_DIR_TO_USE = PKG_DIR;
+            end
+            status = system(sprintf('bash ../mopi.sh %s %s -', FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status);
         case 'matlab'
             % Run the matlab script
@@ -247,8 +261,14 @@ function check_fex(method, includeProtocol)
     switch method
         case 'shell'
             % Run the shell script
-            status = system( ...
-                sprintf('./mopi.sh %s %s -', FNAME, PKG_DIR));
+            if ispc
+                FNAME_TO_USE = convertPcToUnixPath(FNAME);
+                PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
+            else
+                FNAME_TO_USE = FNAME;
+                PKG_DIR_TO_USE = PKG_DIR;
+            end
+            status = system(sprintf('bash ../mopi.sh %s %s -', FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status);
         case 'matlab-file'
             % Run the matlab script
@@ -277,7 +297,7 @@ function check_fex(method, includeProtocol)
     % Delete testing fixtures
     delete(FNAME);
     rmdir(PKG_DIR, 's');
-    rmdir(CACHE_DIR, 's');
+%     rmdir(CACHE_DIR, 's');
 end
 
 function test_shellscript_fex()
@@ -352,8 +372,14 @@ function check_full(method)
     switch method
         case 'shell'
             % Run the shell script
-            status = system( ...
-                sprintf('./mopi.sh %s %s -', FNAME, PKG_DIR));
+            if ispc
+                FNAME_TO_USE = convertPcToUnixPath(FNAME);
+                PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
+            else
+                FNAME_TO_USE = FNAME;
+                PKG_DIR_TO_USE = PKG_DIR;
+            end
+            status = system(sprintf('bash ../mopi.sh %s %s -', FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status);
         case 'matlab'
             % Run the matlab script with a file input
@@ -400,7 +426,12 @@ function check_shellscript_error(entry)
     fid = fopen(FNAME, 'w');
     fprintf(fid, '%s\n', entry);
     fclose(fid);
-    status = system(sprintf('./mopi.sh %s', FNAME));
+    if ispc
+        FNAME_TO_USE = convertPcToUnixPath(FNAME);
+    else
+        FNAME_TO_USE = FNAME;
+    end
+    status = system(sprintf('bash ../mopi.sh %s', FNAME_TO_USE));
     assertTrue(status~=0);
 end
 
@@ -409,7 +440,7 @@ function test_mscript_error_noinput()
 end
 
 function test_shellscript_error_noinput()
-    status = system('./mopi.sh');
+    status = system('bash ../mopi.sh');
     assertTrue(status~=0);
 end
 

@@ -60,6 +60,8 @@
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function mopi(input, packages_folder, fixpath, download_folder)
+    mopiScriptPath = fileparts(matlab.desktop.editor.getActiveFilename);
+    addpath(mopiScriptPath);
     % Input handling --------------------------------------------------
     if nargin<1 || isempty(input)
         input = fullfile(pwd, 'requirements.txt');
@@ -363,7 +365,11 @@ function install_fex(package, packages_folder, download_folder)
     dl_destination = fullfile(download_folder, [package '.tmp']);
     if ~exist(download_folder, 'dir'); mkdir(download_folder); end
     %     [dl_destination, status] = urlwrite(URL, dl_destination);
-    [InvertedStatus, ~] = unix(['bash fexDownload.sh ' dl_destination ' ' URL']);
+    fexDownloadScriptPath = fullfile(fileparts(matlab.desktop.editor.getActiveFilename), 'fexDownload.sh');
+    if ispc
+        fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
+    end
+    [InvertedStatus, ~] = unix(['bash ' fexDownloadScriptPath ' ' convertPcToUnixPath(dl_destination) ' ' URL]);
     status = ~InvertedStatus;
     % Throw a warning and exit if we couldn't install it
     if status==0
