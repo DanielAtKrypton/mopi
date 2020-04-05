@@ -21,6 +21,7 @@ function extract {
           return 1;
         fi;
     fi;
+    cd $TARGETDIR;
     if [ ! -f "$1" ] ; then
         # Make sure file exists
         echo "'$1' - file does not exist"
@@ -28,21 +29,21 @@ function extract {
     fi;
     # Try to decompress file based on extension
     case "$1" in
-        *.tar.bz2)   tar -xvjf "$1";                return  ;;
-        *.tar.gz)    tar -xvzf "$1";                return  ;;
-        *.tar.xz)    tar -xvJf "$1";                return  ;;
-        *.lzma)      unlzma "$1";                   return  ;;
-        *.bz2)       bunzip2 "$1";                  return  ;;
-        *.rar)       unrar x -ad "$1";              return  ;;
-        *.gz)        gunzip "$1";                   return  ;;
-        *.tar)       tar -xvf "$1";                 return  ;;
-        *.tbz2)      tar -xvjf "$1";                return  ;;
-        *.tgz)       tar -xvzf "$1";                return  ;;
-        *.zip)       unzip "$1" -d "$TARGETDIR";    return  ;;
-        *.Z)         uncompress "$1";               return  ;;
-        *.7z)        7z x "$1";                     return  ;;
-        *.xz)        unxz "$1";                     return  ;;
-        *.exe)       cabextract "$1";               return  ;;
+        *.tar.bz2)   tar -xvjf "$1";    return  ;;
+        *.tar.gz)    tar -xvzf "$1";    return  ;;
+        *.tar.xz)    tar -xvJf "$1";    return  ;;
+        *.lzma)      unlzma "$1";       return  ;;
+        *.bz2)       bunzip2 "$1";      return  ;;
+        *.rar)       unrar x -ad "$1";  return  ;;
+        *.gz)        gunzip "$1";       return  ;;
+        *.tar)       tar -xvf "$1";     return  ;;
+        *.tbz2)      tar -xvjf "$1";    return  ;;
+        *.tgz)       tar -xvzf "$1";    return  ;;
+        *.zip)       unzip "$1";        return  ;;
+        *.Z)         uncompress "$1";   return  ;;
+        *.7z)        7z x "$1";         return  ;;
+        *.xz)        unxz "$1";         return  ;;
+        *.exe)       cabextract "$1";   return  ;;
         *)           echo "extract: '$1' - unknown extension";;
     esac;
     # No extension given it seems, so we will try to work it out by MIME-type
@@ -51,7 +52,7 @@ function extract {
     echo "$1 is a $TYPE";
     case $TYPE in
         application/x-gtar)
-            tar -C "$TARGETDIR" -xvf "$1";;
+            tar -xvf "$1";;
         application/x-lzma)
             unlzma "$1";;
         application/x-bzip2)
@@ -62,7 +63,7 @@ function extract {
             # gunzip won't work without an extension, so just use 7z
             false;;
         application/zip)
-            unzip "$1" -d "$TARGETDIR";;
+            unzip "$1";;
         application/x-compress)
             uncompress "$1";;
         application/x-7z-compressed)

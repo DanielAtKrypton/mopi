@@ -193,6 +193,7 @@ function install_uri {
     echo "  $URL";
     echo "  to receive file '$FILENAME'";
 
+    __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     # Work out where we will save the file
     DL_DESTINATION="$DOWNLOAD_FOLDER/$FILENAME";
     # Download the file to the destination, if absent
@@ -200,7 +201,6 @@ function install_uri {
     then
         echo "Downloading to file '$FILENAME' to $DL_DESTINATION";
         # wget -O "$DL_DESTINATION" "$URL";
-        __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
         . ${__dir}/fexDownload.sh $DL_DESTINATION $URL;
         RESULT=$?; if [[ $RESULT -ne 0 ]]; then return $RESULT; fi;
     else
@@ -217,7 +217,7 @@ function install_uri {
     cp "$DL_DESTINATION" "$PACKAGE_FOLDER/$PACKAGE/$FILENAME";
     pushd "$PACKAGE_FOLDER/$PACKAGE/" > /dev/null;
     echo "Attempting to extract contents from $FILENAME";
-    ./extract.sh "$FILENAME" && rm -f "$FILENAME";
+    . ${__dir}/extract.sh "$FILENAME" && rm -f "$FILENAME";
     # If we can't extract it, let's assume it wasn't an archive after
     # all, and we're done if we just put the downloaded file in the
     # directory.
