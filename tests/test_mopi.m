@@ -422,7 +422,9 @@ function check_full(method)
         assertFalse(isempty(pkg('list', OCTAVGE_PKG)));
     end
     % Delete testing fixtures
-    delete(FNAME);
+    if ~strcmp(method, 'matlab-cell')
+        delete(FNAME);
+    end
     rmdir(PKG_DIR, 's');
 %     rmdir(CACHE_DIR, 's');
 end
