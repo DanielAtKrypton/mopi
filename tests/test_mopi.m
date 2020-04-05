@@ -75,7 +75,7 @@ function [result, pth] = find_exist(file, directory, skip_dirs, maxdepth, ...
             fullfile(directory, contents(i).name), skip_dirs, maxdepth, ...
             currentdepth+1);
         % If we find a match, we can exit
-        if result ~= 0;
+        if result ~= 0
             return;
         end
     end
@@ -450,7 +450,12 @@ function test_mscript_error_noinput()
 end
 
 function test_shellscript_error_noinput()
-    status = system('bash ../mopi.sh');
+    if ispc
+        cmd = 'bash ../mopi.sh';
+    else
+        cmd = './mopi.sh';
+    end
+    status = system(cmd);
     assertTrue(status~=0);
 end
 

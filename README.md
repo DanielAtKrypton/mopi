@@ -1,10 +1,9 @@
-[![Travis build](https://travis-ci.org/mopify/mopi.svg?branch=master)](https://travis-ci.org/mopify/mopi)
+# MOPI: MATLAB/Octave Package Installer
+
+[![Travis build](https://travis-ci.com/DanielAtKrypton/mopi.svg?branch=master)](https://travis-ci.com/github/DanielAtKrypton/mopi)
 [![Shippable build](https://img.shields.io/shippable/56b101e71895ca44747335db/master.svg?label=shippable)](https://app.shippable.com/projects/56b101e71895ca44747335db)
 [![Coveralls report](https://coveralls.io/repos/mopify/mopi/badge.svg?branch=master&service=github)](https://coveralls.io/github/mopify/mopi?branch=master)
 [![Codecov report](https://codecov.io/github/mopify/mopi/coverage.svg?branch=master)](https://codecov.io/github/mopify/mopi?branch=master)
-
-MOPI: MATLAB/Octave Package Installer
-=====================================
 
 MOPI provides a useful way to install dependencies for MATLAB and
 Octave.
@@ -18,8 +17,8 @@ has non-trivial dependencies either by using a [submodule][git submodule] of
 file, which can potentially be managed and updated using
 [git subtree][subtree section].
 
+## Usage
 
-Usage
 -----
 
 On *nix, one can download requirements specified in a file named
@@ -65,16 +64,14 @@ mopi(PACKAGE_NAME)
 The `.m` function can optionally add the downloaded packages to the path
 immediately (by default this is enabled).
 
-
-Specification
--------------
+## Specification
 
 This package offers three ways to install other MATLAB and Octave packages.
 These are
-  - from MATLAB FileExchange
-  - from Octave Forge
-  - from generic URL
 
+- from MATLAB FileExchange
+- from Octave Forge
+- from generic URL
 
 ### MATLAB FileExchange (FEX)
 
@@ -88,11 +85,15 @@ In this case, the FEX ID is `55540`.
 
 For example, the package can be specified by
 
+```text
     fex://55540
+```
 
 or alternatively, the name can be included, such as
 
+```text
     fex://55540-dummy-package
+```
 
 which will be stripped out during processing.
 
@@ -105,10 +106,11 @@ and then a hyphen) it is assumed to be a FEX package.
 
 For example,
 
+```text
     55540-dummy-package
+```
 
 is implicitly a FEX package and will be interpretted as such.
-
 
 ### Octave Forge
 
@@ -118,7 +120,9 @@ This should be followed by the name of the package.
 
 For example
 
+```text
     forge://control
+```
 
 Forge requirements are ignored if the `.m` function is run on MATLAB instead
 of Octave.
@@ -132,20 +136,25 @@ For instance, the `statistics` package
 [requires](http://octave.sourceforge.net/statistics/)
 the `io` package, so in a `requirements.txt` file one should specify
 
+```text
     forge://io
     forge://statistics
+```
 
 and not
 
+```text
     forge://statistics
     forge://io
+```
 
 For example,
 
+```text
     control
+```
 
 is implicitly a Forge package and will be interpretted as such.
-
 
 ### Uniform Resource Locator (URL)
 
@@ -161,14 +170,17 @@ be copied as-is.
 
 For example,
 
+```text
     http://www.mathworks.com/moler/ncm.zip
+```
 
 or
 
+```text
     http://www.mathworks.com/moler/ncm.tar.gz
+```
 
 would both be decompressed into a folder `ncm`.
-
 
 ### Comments
 
@@ -177,21 +189,24 @@ Entire lines can be commented out, or inline comments can be used.
 Inline comments must have a space separating them from actual content, lest
 the `#` be confused with a URL anchor
 
+```text
     # This file contains a demo
     fex://55540  # This is a dummy package
+```
 
-
-Example
--------
+## Example
 
 Here is an example file listing package requirements.
 
-**requirements.txt**
+- requirements.txt
 
-    # Requirements for package foo
+-> Requirements for package foo
+
+```text
     forge://control
     fex://55540-dummy-package
     http://www.mathworks.com/moler/ncm.zip
+```
 
 If one wishes to only install requirements when they are needed in the code,
 the following method can be used:
@@ -202,32 +217,29 @@ if ~exist('dummy.txt', 'file')
 end
 ```
 
-
-Differences between .sh and .m implementations
-----------------------------------------------
+## Differences between .sh and .m implementations
 
 There are a small number of differences between the shell and native matlab
 implementations of MOPI.
-  - The shell script can infer archives from their MIME type;
-    the matlab function can only use file extensions.
-  - The shell script can unpack a wider variety of archive file types (provied
-    an appropriate utility bash command is available);
-    on MATLAB, the `.m` function is restricted to only `.zip`, `.gz`, `.tar`,
-    (and `.tar.gz` or `.tgz`);
-    on Octave, the `.m` function is restricted to `.zip`, `.gz`, `.tar`, `.bz`
-    and `.z`.
-  - The shell script can save the downloaded files to a cache directory to use
-    in future;
-    the matlab function always discards downloaded files.
-    This feature should be useful when repeatedly installing dependencies, for
-    unit testing on a continous integration server such as Travis, say.
-  - The matlab function can optionally add the downloaded packages to the
-    MATLAB/Octave search path;
-    the shell script cannot.
 
+- The shell script can infer archives from their MIME type;
+  the matlab function can only use file extensions.
+- The shell script can unpack a wider variety of archive file types (provied
+  an appropriate utility bash command is available);
+  on MATLAB, the `.m` function is restricted to only `.zip`, `.gz`, `.tar`,
+  (and `.tar.gz` or `.tgz`);
+  on Octave, the `.m` function is restricted to `.zip`, `.gz`, `.tar`, `.bz`
+  and `.z`.
+- The shell script can save the downloaded files to a cache directory to use
+  in future;
+  the matlab function always discards downloaded files.
+  This feature should be useful when repeatedly installing dependencies, for
+  unit testing on a continous integration server such as Travis, say.
+- The matlab function can optionally add the downloaded packages to the
+  MATLAB/Octave search path;
+  the shell script cannot.
 
 Including MOPI in another git repository
-----------------------------------------
 
 To make dependency installation as easy as possible, it is prudent to
 ship a copy of MOPI along with any other toolbox or package you are
@@ -265,14 +277,11 @@ the subtree command.
 Additionally, please note that the commit history cannot be rebased
 easily when it includes squashed changes.
 
-
-Notes
------
+## Notes
 
 MOPI was inspired by [requireFEXpackage] and [pip].
 
-
-  [this repository]:    https://github.com/scottclowe/mopi
+  [this repository]:    https://github.com/DanielAtKrypton/mopi
   [subtree section]:    #including-mopi-in-your-git-repository
   [LICENSE]:            https://github.com/scottclowe/mopi/blob/master/LICENSE
   [forge]:              http://octave.sourceforge.net/
@@ -282,3 +291,4 @@ MOPI was inspired by [requireFEXpackage] and [pip].
   [git subtree demo]:   https://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/
   [requireFEXpackage]:  https://www.mathworks.com/matlabcentral/fileexchange/31069-require-fex-package
   [pip]:                https://pip.pypa.io/en/stable/reference/pip_install
+  

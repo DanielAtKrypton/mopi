@@ -232,7 +232,7 @@ end
 %   command. If the OS is Windows, STATUS is returned as -1 and the command
 %   is not attempted.
 function status = fix_permissions(directory)
-    if ispc;
+    if ispc
         % Can't run this on Windows, but shouldn't need to anyway
         status = -1;
         return;
@@ -365,12 +365,13 @@ function install_fex(package, packages_folder, download_folder)
     dl_destination = fullfile(download_folder, [package '.tmp']);
     if ~exist(download_folder, 'dir'); mkdir(download_folder); end
     %     [dl_destination, status] = urlwrite(URL, dl_destination);
+    mopiFileparts = fileparts(which('mopi.m'));
     if ispc
-        fexDownloadScriptPath = fullfile(fileparts(which('mopi.m')), 'fexDownload.sh');
+        fexDownloadScriptPath = fullfile(mopiFileparts, 'fexDownload.sh');
         fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
         dl_destination_to_use = convertPcToUnixPath(dl_destination);
     else
-        fexDownloadScriptPath = fullfile(fileparts(fileparts(which('mopi.m'))), 'fexDownload.sh');
+        fexDownloadScriptPath = fullfile(fileparts(mopiFileparts), 'fexDownload.sh');
         dl_destination_to_use = dl_destination;
     end
     [InvertedStatus, ~] = system(['bash ' fexDownloadScriptPath ' ' dl_destination_to_use ' ' URL]);
@@ -389,9 +390,7 @@ function install_fex(package, packages_folder, download_folder)
     try
         % Try to unzip - not entirely sure we downloaded a zip file
         unzip(dl_destination, packagedir);
-    catch
-        % Octave-safe catch
-        ME = lasterror();
+    catch ME
         if ~strcmp(ME.identifier, 'MATLAB:unzip:invalidZipFile')
             rethrow(ME);
         end
@@ -438,7 +437,7 @@ function install_url(URL, packages_folder, download_folder)
         filename = filename(1:(idx-1));
     end
     % Strip out from after last /
-    if filename(end)=='/';
+    if filename(end)=='/'
         filename = filename(1:end-1);
     end
     idx = find(filename=='/', 1, 'last');
