@@ -158,7 +158,7 @@ function check_url(method, extension, addInlineComment)
     % Declare constants
     switch lower(extension)
         case 'zip'
-            URL = 'http://www.mathworks.com/moler/ncm.zip';
+            URL = 'https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/37976/versions/7/download/zip';
         case 'tar.gz'
             URL = 'http://www.mathworks.com/moler/ncm.tar.gz';
         otherwise
