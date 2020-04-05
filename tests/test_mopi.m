@@ -160,7 +160,7 @@ function check_url(method, extension, addInlineComment)
         case 'zip'
             URL = 'https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/37976/versions/7/download/zip';
         case 'tar.gz'
-            URL = 'http://www.mathworks.com/moler/ncm.tar.gz';
+            URL = 'https://github.com/cbm755/octsympy/releases/download/v2.9.0/symbolic-2.9.0.tar.gz';
         otherwise
             error('Can''t handle %s extension', extension);
     end
