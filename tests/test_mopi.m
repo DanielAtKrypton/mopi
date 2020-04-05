@@ -219,7 +219,7 @@ function check_url(method, extension, addInlineComment)
     % Delete testing fixtures
     delete(FNAME);
     rmdir(PKG_DIR, 's');
-    rmdir(CACHE_DIR, 's');
+%     rmdir(CACHE_DIR, 's');
 end
 
 function test_shellscript_url()
@@ -424,7 +424,7 @@ function check_full(method)
     % Delete testing fixtures
     delete(FNAME);
     rmdir(PKG_DIR, 's');
-    rmdir(CACHE_DIR, 's');
+%     rmdir(CACHE_DIR, 's');
 end
 
 function test_shellscript_full()  %#ok<*DEFNU>
