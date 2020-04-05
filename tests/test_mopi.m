@@ -6,6 +6,7 @@ function test_suite=test_mopi %#ok<STOUT>
         test_functions=localfunctions(); %#ok<NASGU>
     catch % no problem; early Matlab versions can use initTestSuite fine
     end
+    addpath(fileparts(pwd));
     initTestSuite;
 end
 
@@ -159,8 +160,10 @@ function check_url(method, extension, addInlineComment)
     switch lower(extension)
         case 'zip'
             URL = 'https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/37976/versions/7/download/zip';
+            EXPECTED_FILE = 'blackjack.m';
         case 'tar.gz'
             URL = 'https://github.com/cbm755/octsympy/releases/download/v2.9.0/symbolic-2.9.0.tar.gz';
+            EXPECTED_FILE = 'octave-symbolic.metainfo';
         otherwise
             error('Can''t handle %s extension', extension);
     end
@@ -168,8 +171,7 @@ function check_url(method, extension, addInlineComment)
     PKG_DIR = tempname;
     CACHE_DIR = tempname;
     FNAME = [tempname '.txt'];
-    EXPECTED_FILE = 'vandal.m';
-    EXPECTED_DIR = fullfile(PKG_DIR, 'ncm');
+    EXPECTED_DIR = fullfile(PKG_DIR, 'Numerical Computing with MATLAB');
     % Delete old fixtures
     if exist(PKG_DIR, 'dir'); rmdir(PKG_DIR, 's'); end
     if exist(CACHE_DIR, 'dir'); rmdir(CACHE_DIR, 's'); end

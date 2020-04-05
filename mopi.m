@@ -60,8 +60,6 @@
 % along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function mopi(input, packages_folder, fixpath, download_folder)
-    mopiScriptPath = fileparts(which('mopi.m'));
-    addpath(mopiScriptPath);
     % Input handling --------------------------------------------------
     if nargin<1 || isempty(input)
         input = fullfile(pwd, 'requirements.txt');
@@ -477,16 +475,26 @@ function install_url(URL, packages_folder, download_folder)
     % Try to extract from this file - not entirely sure we downloaded a
     % comressed file
     fprintf('Attempting to extract contents from %s\n', dl_destination);
-    status = extract(dl_destination, packagedir);
-    if status==0
+    try
+        result = extractUnknownExt(dl_destination, packagedir);
         fprintf('Sucessfully decompressed file %s\n', dl_destination);
-    else
+    catch err
         fprintf('Could not decompress file %s\n', dl_destination);
-        disp('I''m assuming that this file isn''t actually an archive.');
+        disp(err.message);
         % If we couldn't extract the file, it seems to be a single file.
         % Just move the file to the package directory
-        copyfile(dl_destination, fullfile(packagedir, package));
+        copyfile(dl_destination, fullfile(packagedir, package));    
     end
+%     status = extract(dl_destination, packagedir);
+%     if status==0
+%         fprintf('Sucessfully decompressed file %s\n', dl_destination);
+%     else
+%         fprintf('Could not decompress file %s\n', dl_destination);
+%         disp('I''m assuming that this file isn''t actually an archive.');
+%         % If we couldn't extract the file, it seems to be a single file.
+%         % Just move the file to the package directory
+%         copyfile(dl_destination, fullfile(packagedir, package));
+%     end
     % Make sure the directory has sensible permissions
     fix_permissions(packagedir);
 
