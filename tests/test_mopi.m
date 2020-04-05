@@ -161,9 +161,17 @@ function check_url(method, extension, addInlineComment)
         case 'zip'
             URL = 'https://www.mathworks.com/matlabcentral/mlc-downloads/downloads/submissions/37976/versions/7/download/zip';
             EXPECTED_FILE = 'blackjack.m';
+            % ! TODO shouldn't be this way!
+            switch method
+            case 'shell'
+                DIRNAME = 'Numerical';
+            case 'matlab'
+                DIRNAME = 'zip';
+            end
         case 'tar.gz'
             URL = 'https://github.com/cbm755/octsympy/releases/download/v2.9.0/symbolic-2.9.0.tar.gz';
-            EXPECTED_FILE = 'octave-symbolic.metainfo';
+            EXPECTED_FILE = 'matlab_smt_differences.md';
+            DIRNAME = 'symbolic-2/symbolic-2.9.0';
         otherwise
             error('Can''t handle %s extension', extension);
     end
@@ -171,7 +179,7 @@ function check_url(method, extension, addInlineComment)
     PKG_DIR = tempname;
     CACHE_DIR = tempname;
     FNAME = [tempname '.txt'];
-    EXPECTED_DIR = fullfile(PKG_DIR, 'Numerical Computing with MATLAB');
+    EXPECTED_DIR = fullfile(PKG_DIR, DIRNAME);
     % Delete old fixtures
     if exist(PKG_DIR, 'dir'); rmdir(PKG_DIR, 's'); end
     if exist(CACHE_DIR, 'dir'); rmdir(CACHE_DIR, 's'); end
@@ -305,7 +313,8 @@ function check_fex(method, includeProtocol)
     % Delete testing fixtures
     delete(FNAME);
     rmdir(PKG_DIR, 's');
-%     rmdir(CACHE_DIR, 's');
+    % TODO check if this is ok.
+    % rmdir(CACHE_DIR, 's');
 end
 
 function test_shellscript_fex()
