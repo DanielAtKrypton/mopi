@@ -10,17 +10,6 @@ function test_suite=test_mopi %#ok<STOUT>
     initTestSuite;
 end
 
-% ---------------------------------------------------------------------
-% Check whether we are inside a continuous integration testing environment
-function tf = is_continuous_integration()
-    [~, res] = system('echo $CI');
-    if isempty(strtrim(res))
-        tf = false;
-    else
-        tf = true;
-    end
-end
-
 %isoctave  Determine if the environment is Octave
 %   isoctave() true if the operating environment is Octave, otherwise
 %   it returns false, indicating the environment is something else

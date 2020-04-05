@@ -1,8 +1,8 @@
 function result = extractUnknownExt(filename, targetFolder)
 %EXTRACTUNKNOWNEXT Summary of this function goes here
 %   Detailed explanation goes here
-scriptPath = fileparts(which('extractUnknownExt.m'));
-if ~ispc
+scriptPath = fileparts(mfilename('fullpath'));
+if is_continuous_integration()
     scriptPath = fileparts(scriptPath);
 end
 script = fullfile(scriptPath, 'extract.sh');
