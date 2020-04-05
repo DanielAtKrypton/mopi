@@ -477,6 +477,7 @@ function install_url(URL, packages_folder, download_folder)
     fprintf('Attempting to extract contents from %s\n', dl_destination);
     try
         result = extractUnknownExt(dl_destination, packagedir);
+        delete(dl_destination);
         fprintf('Sucessfully decompressed file %s\n', dl_destination);
     catch err
         fprintf('Could not decompress file %s\n', dl_destination);
