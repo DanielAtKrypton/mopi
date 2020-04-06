@@ -431,31 +431,36 @@ function install_url(URL, packages_folder, download_folder)
     URL = strtrim(URL);
 
     % Use the URL the determine the filename
-    filename = URL;
-    % Strip out GET data after first ?
-    idx = find(filename=='?', 1, 'first');
-    if ~isempty(idx)
-        filename = filename(1:(idx-1));
-    end
-    % Strip out from after last /
-    if filename(end)=='/'
-        filename = filename(1:end-1);
-    end
-    idx = find(filename=='/', 1, 'last');
-    if ~isempty(idx)
-        filename = filename((idx+1):end);
+    try
+        filename = getDownloadFileName(URL);
+    catch
+        filename = URL;
+        % Strip out GET data after first ?
+        idx = find(filename=='?', 1, 'first');
+        if ~isempty(idx)
+            filename = filename(1:(idx-1));
+        end
+        % Strip out from after last /
+        if filename(end)=='/'
+            filename = filename(1:end-1);
+        end
+        idx = find(filename=='/', 1, 'last');
+        if ~isempty(idx)
+            filename = filename((idx+1):end);
+        end    
     end
 
     % Get the package name from the filename
-    package = filename;
-    % Strip out all extensions
-    if package(1)=='.'
-        package = package(2:end);
-    end
-    idx = find(package=='.', 1, 'first');
-    if ~isempty(idx)
-        package = package(1:(idx-1));
-    end
+    package = regex(filename, '.*(?=[.])');
+%     package = filename;
+%     % Strip out all extensions
+%     if package(1)=='.'
+%         package = package(2:end);
+%     end
+%     idx = find(package=='.', 1, 'first');
+%     if ~isempty(idx)
+%         package = package(1:(idx-1));
+%     end
 
     % Report progress
     fprintf('Downloading %s from URL:\n\t%s\n', package, URL);

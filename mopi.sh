@@ -99,20 +99,6 @@ echo "Download folder is: $DOWNLOAD_FOLDER";
 # Subfunctions
 #==============================================================================
 # -----------------------------------------------------------------------------
-# curlFileName
-# Get the filename which a server would like us to use when downloading
-# their file.
-# Inputs
-#   Unique Resource Location (URL)
-# Outputs
-#   Filename determined from content disposition given in header
-function curlFileName {
-    curl -L -I --silent "$1" \
-        | grep 'Content-Disposition:' \
-        | tail -1 \
-        | sed 's/.*filename="\(.*\)"/\1/';
-}
-# -----------------------------------------------------------------------------
 # install_forge
 # Install a package from Octave Forge, and let it automatically load
 # whenever octave is launched.
@@ -178,22 +164,29 @@ function install_fex {
 #   Unique Resource Identifier (URL)
 function install_uri {
     URL="$1";
-    FILENAME=$(curlFileName "$URL");
-    FILENAME=${FILENAME%%[[:space:]]*};
-    FILENAME=${FILENAME##*[[:space:]]};
-    if [ -z "$FILENAME" ];
+    __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    RESULT=$(bash ${__dir}/getDownloadFileName.sh "$URL");
+    STATUS=$?;
+    if [[ $STATUS -ne 0 ]];
     then
-        # Couldn't automatically get the filename, so just use the URL
-        echo "Couldn't get the filename from curl headers"
+        # If this line failed, exit now
+        echo "Couldn't get the donwload filename from headers";
+        echo "$RESULT";
         FILENAME=${URL##*/};
-        FILENAME=${FILENAME%%\?*};
+        FILENAME=${FILENAME%%\?*};        
+    else
+        FILENAME=$RESULT;
     fi;
+    # echo "FILENAME:$FILENAME!";
+    FILENAME=${FILENAME%%.*};
+    # FILENAME=${FILENAME%%[[:space:]]*};
+    # FILENAME=${FILENAME##*[[:space:]]};
+    # echo "FILENAME2:$FILENAME!";    
     PACKAGE=${FILENAME%%.*}
     echo "Installing package '$PACKAGE' from URL:"
     echo "  $URL";
     echo "  to receive file '$FILENAME'";
 
-    __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     # Work out where we will save the file
     DL_DESTINATION="$DOWNLOAD_FOLDER/$FILENAME";
     # Download the file to the destination, if absent
@@ -201,7 +194,7 @@ function install_uri {
     then
         echo "Downloading to file '$FILENAME' to $DL_DESTINATION";
         # wget -O "$DL_DESTINATION" "$URL";
-        . ${__dir}/fexDownload.sh $DL_DESTINATION $URL;
+        . ${__dir}/fexDownload.sh "$DL_DESTINATION" $URL;
         RESULT=$?; if [[ $RESULT -ne 0 ]]; then return $RESULT; fi;
     else
         echo "Using cached copy of file from $DL_DESTINATION";
@@ -217,7 +210,7 @@ function install_uri {
     cp "$DL_DESTINATION" "$PACKAGE_FOLDER/$PACKAGE/$FILENAME";
     pushd "$PACKAGE_FOLDER/$PACKAGE/" > /dev/null;
     echo "Attempting to extract contents from $FILENAME";
-    . ${__dir}/extract.sh "$FILENAME" && rm -f "$FILENAME";
+    . ${__dir}/extract.sh "$FILENAME" "$PACKAGE_FOLDER/$PACKAGE" && rm -f "$FILENAME";
     # If we can't extract it, let's assume it wasn't an archive after
     # all, and we're done if we just put the downloaded file in the
     # directory.

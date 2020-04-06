@@ -3,6 +3,7 @@ function unixPath = convertPcToUnixPath(pcPath)
 %   Detailed explanation goes here
     drive = regex(pcPath, '^[A-Z](?![A-Z]:\\)');
     pathA = strrep(pcPath, regex(pcPath, ['^' drive ':\\']), ['/mnt/' lower(drive), '/']);
-    unixPath = strrep(pathA, '\', '/');
+    pathB = strrep(pathA, '\', '/');
+    unixPath = strrep(pathB, ' ', '\ ');
 end
 

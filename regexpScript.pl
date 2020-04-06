@@ -2,21 +2,13 @@
 
 $string = @ARGV[0];
 $pattern = @ARGV[1];
+$modifier = @ARGV[2];
 
-# $pattern = 'C:\Users\Daniel\Workspaces\Matlab\mopi\fexDownload.sh';
-# $patttern  ='^[A-Z](?![A-Z]:\\)'
+# print "pattern is:$pattern.\n";
+# print "string is:$string.\n";
 
-$pattern = qr/($pattern)/;
-
-# $match = ($string =~ /$pattern/g);
-# if ($match)  {
-#    print $match;
-# }
-
-
-$string =~ /$pattern/g;
-# print "Before: $`\n";
+$string =~ m/(?$modifier)$pattern/;
 # print "Matched: $&\n";
+# print "Before: $`\n";
 # print "After: $'\n";
-
-print "$&";
+print "${&}\n${`}\n${'}";
