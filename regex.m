@@ -12,7 +12,10 @@ otherwise
     error('Wrong number of inputs!')
 end
 resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
-result = split(resultingString,compose(["\r\n", "\n", "\r"]));
+% composedStringArray = compose(["\r\n", "\n", "\r"]);
+% save('composedStringArray.mat', 'composedStringArray');
+load('composedStringArray.mat', 'composedStringArray');
+result = split(resultingString, composedStringArray);
 matched = result{1};
 before = result{2};
 after = result{3};
