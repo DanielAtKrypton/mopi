@@ -85,6 +85,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-tests/external/
 
+external/
 testresults.xml
