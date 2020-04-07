@@ -373,9 +373,10 @@ function install_fex(package, packages_folder, download_folder)
         fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
         dl_destination_to_use = convertPcToUnixPath(dl_destination);
     else
-        if is_continuous_integration
-            mopiPath = fileparts(mopiPath);
-        end
+        % ! TODO Check if the commented section below works.
+        % if is_continuous_integration
+        %     mopiPath = fileparts(mopiPath);
+        % end
         fexDownloadScriptPath = fullfile(mopiPath, 'fexDownload.sh');
         dl_destination_to_use = dl_destination;
     end
