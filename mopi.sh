@@ -128,7 +128,9 @@ function install_forge {
     # Install, retrying as necessary
     for i in {1..8};
     do
-        octave -q --eval "pkg install -auto -forge '$PACKAGE'" \
+        # TODO CHECK if removing -auto is alright.
+        # octave -q --eval "pkg install -auto -forge '$PACKAGE'" \
+        octave -q --eval "pkg install -forge '$PACKAGE'" \
             && return \
             || echo "Failed attempt $i. Pausing then retrying..." \
             && sleep 10;

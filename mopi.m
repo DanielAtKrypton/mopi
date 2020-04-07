@@ -235,6 +235,7 @@ function status = fix_permissions(directory)
         status = -1;
         return;
     end
+    directory = strrep(directory, ' ', '\ '); % Just in case of a name with spaces.
     status = system(sprintf('chmod u+rw,a+X -R %s', directory));
 end
 
@@ -317,7 +318,10 @@ function install_forge(package)
     % Got the package name actual
     fprintf('Installing %s from Octave Forge\n', package);
     % Install, retrying as necessary
-    pkg('install', '-auto', '-forge', package);
+    
+    % TODO CHECK if removing auto is alright. It was deprecated.
+    % pkg('install', '-auto', '-forge', package);
+    pkg('install', '-forge', package);
 end
 
 
@@ -451,6 +455,7 @@ function install_url(URL, packages_folder, download_folder)
     end
 
     % Get the package name from the filename
+    fprintf("Filename:%s\n", filename);
     package = regex(filename, '.*(?=[.])');
 %     package = filename;
 %     % Strip out all extensions

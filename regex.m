@@ -11,15 +11,22 @@ case 3
 otherwise
     error('Wrong number of inputs!')
 end
-resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
 if is_octave
-     result = strsplit(resultingString, {"\r\n", "\n", "\r"}, "collapsedelimiters", false);
+    regResult = regexp(inputString, pattern);
+    if regResult
+        substitutedString = regexprep (inputString, pattern, '');
+        resultingString = substr (inputString, regResult, length(inputString)-length(substitutedString));
+    else
+        resultingString = '';
+    end
+    matched = resultingString;
 else
+    resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
     result = splitlines(resultingString);
+    matched = result{1};
+    before = result{2};
+    after = result{3};
 end
-matched = result{1};
-before = result{2};
-after = result{3};
 
 
 
