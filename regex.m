@@ -12,10 +12,14 @@ otherwise
     error('Wrong number of inputs!')
 end
 resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
-% composedStringArray = compose(["\r\n", "\n", "\r"]);
-% save('composedStringArray.mat', 'composedStringArray');
-load('composedStringArray.mat', 'composedStringArray');
-result = split(resultingString, composedStringArray);
+if is_octave
+    % composedStringArray = compose(["\r\n", "\n", "\r"]);
+    % save('composedStringArray.mat', 'composedStringArray');
+    load('composedStringArray.mat', 'composedStringArray');
+    result = strsplit(resultingString, composedStringArray);
+else
+    result = splitlines(resultingString);
+end
 matched = result{1};
 before = result{2};
 after = result{3};

@@ -316,7 +316,7 @@ function check_full(method)
     % Delete old fixtures
     if exist(PKG_DIR, 'dir'); rmdir(PKG_DIR, 's'); end
     if exist(CACHE_DIR, 'dir'); rmdir(CACHE_DIR, 's'); end
-    if isoctave() && is_continuous_integration() ...
+    if is_octave() && is_continuous_integration() ...
             && ~isempty(pkg('list', OCTAVGE_PKG))
         fprintf('Removing existing copy of %s\n', OCTAVGE_PKG);
         pkg('uninstall', OCTAVGE_PKG);
@@ -354,7 +354,7 @@ function check_full(method)
                 EXPECTED_FILES{iFile, 2:1}) ...
             );
     end
-    if isoctave()
+    if is_octave()
         assertFalse(isempty(pkg('list', OCTAVGE_PKG)));
     end
     % Delete testing fixtures
@@ -380,14 +380,6 @@ function check_shellscript_error(entry)
     end
     status = system(sprintf([cmd ' %s'], FNAME_TO_USE));
     assertTrue(status~=0);
-end
-
-%isoctave  Determine if the environment is Octave
-%   isoctave() true if the operating environment is Octave, otherwise
-%   it returns false, indicating the environment is something else
-%   (MATLAB, Scilab, FreeMat, etc).
-function tf = isoctave()
-    tf = exist('OCTAVE_VERSION', 'builtin') ~= 0;
 end
 
 %find_exist  Search for a file inside directory and its children
@@ -452,7 +444,7 @@ function check_forge(method, includeProtocol)
     PKG_DIR = tempname;
     FNAME = [tempname '.txt'];
     % Can only test Forge installation on Octave
-    if ~isoctave()
+    if ~is_octave()
         moxunit_throw_test_skipped_exception( ...
             'Can only test Forge installation on Octave');
     end
