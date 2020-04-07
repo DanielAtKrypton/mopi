@@ -15,8 +15,8 @@ resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
 if is_octave
     % composedStringArray = compose(["\r\n", "\n", "\r"]);
     % save('composedStringArray.mat', 'composedStringArray');
-    load('composedStringArray.mat', 'composedStringArray');
-    result = strsplit(resultingString, composedStringArray);
+%     load('composedStringArray.mat', 'composedStringArray');
+    result = strsplit(resultingString, {"??", "?", "?"});
 else
     result = splitlines(resultingString);
 end
