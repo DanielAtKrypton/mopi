@@ -13,10 +13,7 @@ otherwise
 end
 resultingString = perl('regexpScript.pl', inputString, pattern, modifier);
 if is_octave
-    % composedStringArray = compose(["\r\n", "\n", "\r"]);
-    % save('composedStringArray.mat', 'composedStringArray');
-%     load('composedStringArray.mat', 'composedStringArray');
-    result = strsplit(resultingString, {"??", "?", "?"});
+     result = strsplit(resultingString, {"\r\n", "\n", "\r"}, "collapsedelimiters", false);
 else
     result = splitlines(resultingString);
 end

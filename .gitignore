@@ -43,6 +43,8 @@ __pycache__/
 ##---------------------------------------------------
 # Linux default .gitignore
 ##---------------------------------------------------
+# Octave
+octave-workspace
 
 # Editor backup files
 *~
