@@ -106,6 +106,9 @@ function test_shellscript_error_noinput()
         cmd = 'bash ../mopi.sh';
     else        
         cmd = '../mopi.sh';
+        if is_continuous_integration
+            cmd = cmd(2:end);
+        end
     end
     status = system(cmd);
     assertTrue(status~=0);
@@ -197,6 +200,9 @@ function check_url(method, extension, addInlineComment)
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
                 cmd = '../mopi.sh';
+                if is_continuous_integration
+                    cmd = cmd(2:end);
+                end
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -252,6 +258,9 @@ function check_fex(method, includeProtocol)
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
                 cmd = '../mopi.sh';
+                if is_continuous_integration
+                    cmd = cmd(2:end);
+                end
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -332,6 +341,9 @@ function check_full(method)
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
                 cmd = '../mopi.sh';
+                if is_continuous_integration
+                    cmd = cmd(2:end);
+                end
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -376,6 +388,9 @@ function check_shellscript_error(entry)
     else
         FNAME_TO_USE = FNAME;
         cmd = '../mopi.sh';
+        if is_continuous_integration
+            cmd = cmd(2:end);
+        end
     end
     [status, result] = system(sprintf([cmd ' %s'], FNAME_TO_USE));
     assertTrue(status~=0, result);
@@ -474,6 +489,9 @@ function check_forge(method, includeProtocol)
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
                 cmd = '../mopi.sh';
+                if is_continuous_integration
+                    cmd = cmd(2:end);
+                end
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
