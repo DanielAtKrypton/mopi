@@ -10,150 +10,150 @@ function test_suite=test_mopi %#ok<STOUT>
     initTestSuite;
 end
 
-% function test_shellscript_forge()
-%     check_forge('shell', true);
-% end
+function test_shellscript_forge()
+    check_forge('shell', true);
+end
 
-% function test_shellscript_forge_without_protocol()
-%     check_forge('shell', false);
-% end
+function test_shellscript_forge_without_protocol()
+    check_forge('shell', false);
+end
 
-% function test_mscript_forge()
-%     check_forge('matlab', true);
-% end
+function test_mscript_forge()
+    check_forge('matlab', true);
+end
 
-% function test_mscript_forge_without_protocol()
-%     check_forge('matlab', false);
-% end
+function test_mscript_forge_without_protocol()
+    check_forge('matlab', false);
+end
 
-% function test_shellscript_url()
-%     check_url('shell', 'zip', false);
-% end
+function test_shellscript_url()
+    check_url('shell', 'zip', false);
+end
 
-% function test_shellscript_url_with_inline_comment()
-%     check_url('shell', 'zip', true);
-% end
+function test_shellscript_url_with_inline_comment()
+    check_url('shell', 'zip', true);
+end
 
 function test_shellscript_url_targz()
     check_url('shell', 'tar.gz', true);
 end
 
-% function test_mscript_url()
-%     check_url('matlab', 'zip', false);
-% end
+function test_mscript_url()
+    check_url('matlab', 'zip', false);
+end
 
-% function test_mscript_url_with_inline_comment()
-%     check_url('matlab', 'zip', true);
-% end
+function test_mscript_url_with_inline_comment()
+    check_url('matlab', 'zip', true);
+end
 
-% function test_mscript_url_targz()
-%     moxunit_throw_test_skipped_exception( ...
-%         'Cant process tarball due to file permission problems.');
-%     check_url('matlab', 'tar.gz', true);
-% end
+function test_mscript_url_targz()
+    moxunit_throw_test_skipped_exception( ...
+        'Cant process tarball due to file permission problems.');
+    check_url('matlab', 'tar.gz', true);
+end
 
-% function test_shellscript_fex()
-%     moxunit_throw_test_skipped_exception( ...
-%         ['Cant access MathWorks certificate for wget when calling through' ...
-%         ' MATLAB or Octave'' system command.']);
-%     check_fex('shell', true);
-% end
+function test_shellscript_fex()
+    moxunit_throw_test_skipped_exception( ...
+        ['Cant access MathWorks certificate for wget when calling through' ...
+        ' MATLAB or Octave'' system command.']);
+    check_fex('shell', true);
+end
 
-% function test_shellscript_fex_without_protocol()
-%     moxunit_throw_test_skipped_exception( ...
-%         ['Cant access MathWorks certificate for wget when calling through' ...
-%         ' MATLAB or Octave'' system command.']);
-%     check_fex('shell', false);
-% end
+function test_shellscript_fex_without_protocol()
+    moxunit_throw_test_skipped_exception( ...
+        ['Cant access MathWorks certificate for wget when calling through' ...
+        ' MATLAB or Octave'' system command.']);
+    check_fex('shell', false);
+end
 
-% function test_mscript_fex()
-%     check_fex('matlab-file', true);
-% end
+function test_mscript_fex()
+    check_fex('matlab-file', true);
+end
 
-% function test_mscript_fex_without_protocol()
-%     check_fex('matlab-file', false);
-% end
+function test_mscript_fex_without_protocol()
+    check_fex('matlab-file', false);
+end
 
-% function test_mscript_fex_str()
-%     check_fex('matlab-str', true);
-% end
+function test_mscript_fex_str()
+    check_fex('matlab-str', true);
+end
 
-% function test_mscript_fex_int_id()
-%     check_fex('matlab-int-id', true);
-% end
+function test_mscript_fex_int_id()
+    check_fex('matlab-int-id', true);
+end
 
-% function test_mscript_fex_addpath()
-%     check_fex('matlab-addpath', true);
-% end
+function test_mscript_fex_addpath()
+    check_fex('matlab-addpath', true);
+end
 
-% function test_shellscript_full()  %#ok<*DEFNU>
-%     check_full('shell');
-% end
+function test_shellscript_full()  %#ok<*DEFNU>
+    check_full('shell');
+end
 
-% function test_mscript_file()
-%     check_full('matlab');
-% end
+function test_mscript_file()
+    check_full('matlab');
+end
 
-% function test_mscript_cell()
-%     check_full('matlab-cell');
-% end
+function test_mscript_cell()
+    check_full('matlab-cell');
+end
 
-% function test_mscript_error_noinput()
-%     assertExceptionThrown(@()mopi(), 'MOPI:BadInput');
-% end
+function test_mscript_error_noinput()
+    assertExceptionThrown(@()mopi(), 'MOPI:BadInput');
+end
 
-% function test_shellscript_error_noinput()
-%     if ispc
-%         cmd = 'bash ../mopi.sh';
-%     else        
-%         cmd = '../mopi.sh';
-%         if is_continuous_integration
-%             cmd = cmd(2:end);
-%         end
-%     end
-%     status = system(cmd);
-%     assertTrue(status~=0);
-% end
+function test_shellscript_error_noinput()
+    if ispc
+        cmd = 'bash ../mopi.sh';
+    else        
+        cmd = '../mopi.sh';
+        if is_continuous_integration
+            cmd = cmd(2:end);
+        end
+    end
+    status = system(cmd);
+    assertTrue(status~=0);
+end
 
-% function test_mscript_error_float()
-%     assertExceptionThrown(@()mopi(2.5, 'external'), 'MOPI:BadInput');
-% end
+function test_mscript_error_float()
+    assertExceptionThrown(@()mopi(2.5, 'external'), 'MOPI:BadInput');
+end
 
-% function test_shellscript_error_float()
-%     check_shellscript_error('2.5');
-% end
+function test_shellscript_error_float()
+    check_shellscript_error('2.5');
+end
 
-% function test_mscript_error_struct()
-%     Shh.package = 'control';
-%     assertExceptionThrown(@()mopi(Shh, 'external'), 'MOPI:BadInput');
-% end
+function test_mscript_error_struct()
+    Shh.package = 'control';
+    assertExceptionThrown(@()mopi(Shh, 'external'), 'MOPI:BadInput');
+end
 
-% function test_mscript_error_badurl()
-%     package = 'http://example.com/fakefile';
-%     assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:NoDownload');
-% end
+function test_mscript_error_badurl()
+    package = 'http://example.com/fakefile';
+    assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:NoDownload');
+end
 
-% function test_shellscript_error_badurl()
-%     check_shellscript_error('http://example.com/fakefile');
-% end
+function test_shellscript_error_badurl()
+    check_shellscript_error('http://example.com/fakefile');
+end
 
-% function test_mscript_error_badfex()
-%     package = 'fex://0-fake-fex-id';
-%     assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:NoDownload');
-% end
+function test_mscript_error_badfex()
+    package = 'fex://0-fake-fex-id';
+    assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:NoDownload');
+end
 
-% function test_shellscript_error_badfex()
-%     check_shellscript_error('fex://0-fake-fex-id');
-% end
+function test_shellscript_error_badfex()
+    check_shellscript_error('fex://0-fake-fex-id');
+end
 
-% function test_mscript_error_badentry()
-%     package = 'a1$%@b2';
-%     assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:BadEntry');
-% end
+function test_mscript_error_badentry()
+    package = 'a1$%@b2';
+    assertExceptionThrown(@()mopi(package, 'external'), 'MOPI:BadEntry');
+end
 
-% function test_shellscript_error_badentry()
-%     check_shellscript_error('a1$%@b2');
-% end
+function test_shellscript_error_badentry()
+    check_shellscript_error('a1$%@b2');
+end
 
 % ---------------------------------------------------------------------
 % Test package can be installed from generic URL, by shell or matlab script
