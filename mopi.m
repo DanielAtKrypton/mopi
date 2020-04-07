@@ -380,10 +380,9 @@ function install_fex(package, packages_folder, download_folder)
         fexDownloadScriptPath = fullfile(mopiPath, 'fexDownload.sh');
         dl_destination_to_use = dl_destination;
     end
-    [InvertedStatus, ~] = system(['bash ' fexDownloadScriptPath ' ' dl_destination_to_use ' ' URL]);
-    status = ~InvertedStatus;
+    [InvertedStatus, ~] = system(['bash "' fexDownloadScriptPath '" "' dl_destination_to_use '" ' URL]);
     % Throw a warning and exit if we couldn't install it
-    if status==0
+    if InvertedStatus
         error('MOPI:NoDownload', ...
             'Could not download package %s from\n\t%s', package, URL);
     end

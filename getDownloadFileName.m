@@ -10,7 +10,7 @@ script = fullfile(scriptPath, 'getDownloadFileName.sh');
 if ispc
     script = convertPcToUnixPath(script);
 end
-[status, result] = system(['bash ' script ' ' url]);
+[status, result] = system(['bash "' script '" ' url]);
 if status
     ME = MException('ExtractUnknownExt:errorOnExtraction', ...
         result);
