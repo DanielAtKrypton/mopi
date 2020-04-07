@@ -277,6 +277,16 @@ the subtree command.
 Additionally, please note that the commit history cannot be rebased
 easily when it includes squashed changes.
 
+## Test
+
+First make sure you have [Mox unit](https://github.com/MOxUnit/MOxUnit.git) installed.
+
+To start the test suite, run the following command inside Matlab or Octave:
+
+```matlab
+moxunit_runtests('tests', '-recursive', '-verbose', '-junit_xml_file', 'testresults.xml');
+```
+
 ## Notes
 
 MOPI was inspired by [requireFEXpackage] and [pip].

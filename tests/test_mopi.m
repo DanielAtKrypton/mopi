@@ -6,7 +6,6 @@ function test_suite=test_mopi %#ok<STOUT>
         test_functions=localfunctions(); %#ok<NASGU>
     catch % no problem; early Matlab versions can use initTestSuite fine
     end
-    addpath(fileparts(pwd));
     initTestSuite;
 end
 
@@ -104,12 +103,9 @@ end
 
 function test_shellscript_error_noinput()
     if ispc
-        cmd = 'bash ../mopi.sh';
+        cmd = 'bash ./mopi.sh';
     else        
-        cmd = '../mopi.sh';
-        if is_continuous_integration
-            cmd = cmd(2:end);
-        end
+        cmd = './mopi.sh';
     end
     status = system(cmd);
     assertTrue(status~=0);
@@ -196,14 +192,11 @@ function check_url(method, extension, addInlineComment)
             if ispc
                 FNAME_TO_USE = convertPcToUnixPath(FNAME);
                 PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
-                cmd = 'bash ../mopi.sh';
+                cmd = 'bash ./mopi.sh';
             else
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
-                cmd = '../mopi.sh';
-                if is_continuous_integration
-                    cmd = cmd(2:end);
-                end
+                cmd = './mopi.sh';
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -254,14 +247,11 @@ function check_fex(method, includeProtocol)
             if ispc
                 FNAME_TO_USE = convertPcToUnixPath(FNAME);
                 PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
-                cmd = 'bash ../mopi.sh';
+                cmd = 'bash ./mopi.sh';
             else
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
-                cmd = '../mopi.sh';
-                if is_continuous_integration
-                    cmd = cmd(2:end);
-                end
+                cmd = './mopi.sh';
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -337,14 +327,11 @@ function check_full(method)
             if ispc
                 FNAME_TO_USE = convertPcToUnixPath(FNAME);
                 PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
-                cmd = 'bash ../mopi.sh';
+                cmd = 'bash ./mopi.sh';
             else
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
-                cmd = '../mopi.sh';
-                if is_continuous_integration
-                    cmd = cmd(2:end);
-                end
+                cmd = './mopi.sh';
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
@@ -385,13 +372,10 @@ function check_shellscript_error(entry)
     fclose(fid);
     if ispc
         FNAME_TO_USE = convertPcToUnixPath(FNAME);
-        cmd = 'bash ../mopi.sh';
+        cmd = 'bash ./mopi.sh';
     else
         FNAME_TO_USE = FNAME;
-        cmd = '../mopi.sh';
-        if is_continuous_integration
-            cmd = cmd(2:end);
-        end
+        cmd = './mopi.sh';
     end
     [status, result] = system(sprintf([cmd ' %s'], FNAME_TO_USE));
     assertTrue(status~=0, result);
@@ -485,14 +469,11 @@ function check_forge(method, includeProtocol)
             if ispc
                 FNAME_TO_USE = convertPcToUnixPath(FNAME);
                 PKG_DIR_TO_USE = convertPcToUnixPath(PKG_DIR);
-                cmd = 'bash ../mopi.sh';
+                cmd = 'bash ./mopi.sh';
             else
                 FNAME_TO_USE = FNAME;
                 PKG_DIR_TO_USE = PKG_DIR;
-                cmd = '../mopi.sh';
-                if is_continuous_integration
-                    cmd = cmd(2:end);
-                end
+                cmd = './mopi.sh';
             end
             [status, result] = system(sprintf([cmd ' %s %s -'], FNAME_TO_USE, PKG_DIR_TO_USE));
             assertEqual(0, status, result);
