@@ -84,21 +84,23 @@ function extract {
     then
         case $TYPE in
         application/gzip)
-            command -v 7z >/dev/null 2>&1 && \
-            7z x "$TARGETFILE" 2>&1 && \
+            command -v 7z && \
+            7z x "$TARGETFILE" && \
             7z x "$TARGETFILE~";;
         *)
-            command -v 7z >/dev/null 2>&1 && \
+            command -v 7z && \
             7z x "$TARGETFILE";;
         esac;
         RESULT=$?;
+        if [[ $RESULT -ne 0 ]];
+        then
+            echo "extract: '$TARGETFILE' - extraction failed";
+            echo " - reason: 7z is not installed!"
+        fi;
+        return $RESULT;
     fi;
-    if [[ $RESULT -ne 0 ]];
-    then
-        echo "extract: '$TARGETFILE' - extraction failed";
-        echo "$RESULT";
-    fi;
-    return $RESULT;
+    echo "extract: '$TARGETFILE' - extraction failed";
+    return $RESULT;    
 }
 
 FILENAME=$1;

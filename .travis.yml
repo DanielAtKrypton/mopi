@@ -31,8 +31,8 @@ before_install:
   - travis_retry sudo add-apt-repository -y ppa:octave/stable
   # Update apt-get to include the contents from the new locations
   - travis_retry sudo apt-get update -qq
-  # Install octave with apt-get
-  - travis_retry sudo apt-get install -y octave liboctave-dev
+  # Install octave and 7z with apt-get
+  - travis_retry sudo apt-get install -y octave liboctave-dev p7zip-full
   # Check which versions of g++ and gcc we are using
   - which g++;
     g++ --version;
