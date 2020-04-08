@@ -1,0 +1,1 @@
+testResults = moxunit_runtests('tests', '-recursive', '-verbose', '-junit_xml_file', 'testresults.xml');
