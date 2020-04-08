@@ -282,7 +282,6 @@ function check_fex(method, includeProtocol)
     % Delete testing fixtures
     delete(FNAME);
     rmdir(PKG_DIR, 's');
-    % TODO check if this is ok.
     % rmdir(CACHE_DIR, 's');
 end
 

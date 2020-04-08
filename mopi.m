@@ -319,8 +319,6 @@ function install_forge(package)
     fprintf('Installing %s from Octave Forge\n', package);
     % Install, retrying as necessary
     
-    % TODO CHECK if removing auto is alright. It was deprecated.
-    % pkg('install', '-auto', '-forge', package);
     pkg('install', '-forge', package);
 end
 
@@ -373,10 +371,6 @@ function install_fex(package, packages_folder, download_folder)
         fexDownloadScriptPath = convertPcToUnixPath(fexDownloadScriptPath);
         dl_destination_to_use = convertPcToUnixPath(dl_destination);
     else
-        % ! TODO Check if the commented section below works.
-        % if is_continuous_integration
-        %     mopiPath = fileparts(mopiPath);
-        % end
         fexDownloadScriptPath = fullfile(mopiPath, 'fexDownload.sh');
         dl_destination_to_use = dl_destination;
     end
