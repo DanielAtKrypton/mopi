@@ -1,6 +1,6 @@
 parentDir = fileparts(fileparts(mfilename('fullpath')));
 packageFolder = 'mopi';
-% mkdir(parentDir, packageFolder);
+mkdir(parentDir, packageFolder);
 movefile('*.m', packageFolder);
 copyfile('*.sh', packageFolder);
 copyfile('*.pl', packageFolder);
