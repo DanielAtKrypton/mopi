@@ -26,6 +26,9 @@
 *.svg       text
 *.eps       binary
 
+# These files should have specific line endings
+*.sh	text eol=lf
+*.bat	text eol=crlf
 
 ##---------------------------------------------------
 # MATLAB .gitattributes
